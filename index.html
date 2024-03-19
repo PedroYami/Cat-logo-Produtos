@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projeto Marçal</title>
+
+    <style>
+
+        body {
+            background-image: url(https://i.pinimg.com/originals/b8/33/75/b833753a0b988cda6ffaa9dc1966c5b0.gif);
+            background-size: cover; 
+            background-repeat: no-repeat; 
+            margin: 0;
+        }
+
+        .container {
+            margin: 20px;
+            background-color: rgba(230, 230, 230, 0.8); 
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .produto-item {
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .botoes {
+            text-align: center; 
+        }
+
+        .botoes button {
+            margin: 10px; 
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Catálogo de Produtos</h1>
+
+        <div id="output" class="produtos"></div>
+
+        <div class="botoes">
+            <button onclick="adicionarProduto()">adicionar produto </button>
+            <button onclick="buscarProduto()">buscar produto </button>
+            <button onclick="atualizarProduto()">atualizar produto </button>
+            <button onclick="exibirTodosProdutos()">visualizar produtos </button>
+            <button onclick="removerProduto()">remover produtso </button>
+        </div>
+
+        <script>
+            let catalogo = [];
+
+            function adicionarProduto() {
+                let nome = prompt('Digite o nome do produto:');
+                let preco = prompt('Digite o preço do produto:');
+                let descricao = prompt('Digite a descrição do produto:');
+                let produto = {
+                    nome: nome,
+                    preco: preco,
+                    descricao: descricao
+                };
+                catalogo.push(produto);
+            }
+
+            function buscarProduto() {
+
+                let nomeBusca = prompt('Digite o nome do produto que deseja buscar:');
+                let produtoEncontrado = catalogo.find(produto => produto.nome === nomeBusca);
+
+                    if (produtoEncontrado) {
+                        alert(`Produto encontrado: Nome: ${produtoEncontrado.nome}, Preço: ${produtoEncontrado.preco}, Descrição: ${produtoEncontrado.descricao}`);
+
+                    } else {
+                        alert('Produto não encontrado.');
+                    }
+            }
+
+            function atualizarProduto() {
+
+                let nomeAtualizar = prompt('Digite o nome do produto que deseja atualizar:');
+                let produtoEncontrado = catalogo.find(produto => produto.nome === nomeAtualizar);
+
+                    if (produtoEncontrado) {
+                        let novoPreco = prompt('Digite o novo preço:');
+                        let novaDescricao = prompt('Digite a nova descrição');
+                            produtoEncontrado.preco = novoPreco;
+                            produtoEncontrado.descricao = novaDescricao;
+
+                    } else {
+                        alert('não achou');
+                    }
+            }
+
+            function removerProduto() {
+                let nomeRemover = prompt('Digite o nome do produto');
+                catalogo = catalogo.filter(produto => produto.nome !== nomeRemover);
+            }
+
+            function exibirTodosProdutos() {
+                let listaProdutos = '<h2> Produtos:</h2>';
+                catalogo.forEach(produto => {
+
+                    listaProdutos += `
+                        <div class="produto-item">
+                            <div class="produto-info">
+                                <strong>Nome:</strong> ${produto.nome}<br>
+                                <strong>Preço:</strong> R$ ${produto.preco}<br>
+                                <strong>Descrição:</strong> ${produto.descricao}<br>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                    document.getElementById('output').innerHTML = listaProdutos;
+                    document.getElementById('output').style.display = 'block'; 
+            }
+        </script>
+    </div>
+</body>
+
+</html>
